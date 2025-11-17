@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <!-- Enlaces a bootstrap-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <style type="text/css">
+      body {
+        margin-left: 10px;
+      }
+
+      #formularios {
+        margin-top: 60px;
+      }
+    </style>
+    <title>FitForge</title>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">FitForge</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Usuarios</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#" id="mnuAltaUsuario">Alta de usuario</a></li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#" id="mnuBuscarUsuario">Buscar usuario por nombre</a>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li><a class="dropdown-item" href="#" id="mnuListadoUsuario">Listado de usuarios por plan</a></li>
+                <hr class="dropdown-divider" />
+
+                <li>
+                  <a class="dropdown-item" href="#" id="mnuListadoUsuarioPorEdad">Listado ordenado de usuarios por edad</a>
+                  <hr class="dropdown-divider" />
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Actividades</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Alta de Actividad</a></li>
+                <hr class="dropdown-divider" />
+                <li><a class="dropdown-item" href="#">Buscar actividad por nombre</a></li>
+                <hr class="dropdown-divider" />
+                <li><a class="dropdown-item" href="#">Buscar actividad por fecha</a></li>
+                <hr class="dropdown-divider" />
+                <li><a class="dropdown-item" href="#">Listado de actividades</a></li>
+                <hr class="dropdown-divider" />
+                <li><a class="dropdown-item" href="#">Listado de actividades ordenadas por fecha</a></li>
+                <hr class="dropdown-divider" />
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Reserva</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Alta de Reserva</a></li>
+                <hr class="dropdown-divider" />
+                <li><a class="dropdown-item" href="#">Buscar reserva por fecha</a></li>
+                <hr class="dropdown-divider" />
+                <li><a class="dropdown-item" href="#">Listado de reservas</a></li>
+                <hr class="dropdown-divider" />
+                <li><a class="dropdown-item" href="#">Listado de reservas ordenadas por fecha</a></li>
+                <hr class="dropdown-divider" />
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container" id="formularios">
+      <div class="row">
+        <!-- Alta Usuario-->
+        <form class="form-horizontal d-none" name="frmAltaUsuario" id="frmAltaUsuario">
+          <fieldset>
+            <legend>Alta de Usuario</legend>
+
+            <!-- name_user -->
+            <div class="form-group">
+              <label class="col-xs-4 control-label" for="name_user">Nombre</label>
+              <div class="col-xs-4">
+                <input id="name_user" name="name_user" placeholder="Nombre de usuario" class="form-control input-md" maxlength="50" type="text" />
+              </div>
+            </div>
+
+            <!-- email -->
+            <div class="form-group">
+              <label class="col-xs-4 control-label" for="email">Email</label>
+              <div class="col-xs-4">
+                <input id="email" name="email" placeholder="Email" class="form-control input-md" maxlength="70" type="text" />
+              </div>
+            </div>
+
+            <!-- registration_date -->
+            <div class="form-group">
+              <label class="col-xs-4 control-label" for="registration_date">Fecha</label>
+              <div class="col-xs-4">
+                <input id="registration_date" name="registration_date" placeholder="Selecciona una fecha" class="form-control input-md" type="date" />
+              </div>
+            </div>
+
+            <!-- age -->
+            <div class="form-group">
+              <label class="col-xs-4 control-label" for="age">Edad</label>
+              <div class="col-xs-4">
+                <input id="age" name="age" placeholder="Introduce tu edad" class="form-control input-md" type="number" min="5" max="99" />
+              </div>
+            </div>
+
+            <!-- vip -->
+            <div class="form-group">
+              <label class="col-xs-4 control-label" for="vip">VIP</label>
+              <div class="col-xs-4">
+                <select id="vip" name="vip" class="form-control input-md">
+                  <option value="0">No</option>
+                  <option value="1">Sí</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- observation-->
+            <div class="form-group">
+              <label class="col-xs-4 control-label" for="observation">Observación</label>
+              <div class="col-xs-4">
+                <input id="observation" name="observation" placeholder="Escriba una observación" class="form-control input-md" type="text" />
+              </div>
+            </div>
+
+            <!-- Planes de membership -->
+            <div class="form-group">
+              <label class="col-xs-4 control-label" for="lstAltaPlanes">Plan</label>
+              <div class="col-xs-4">
+                <select class="form-select" name="lstAltaPlanes" id="lstAltaPlanes"></select>
+              </div>
+            </div>
+
+            <!-- Button -->
+            <div class="form-group">
+              <label class="col-xs-4 control-label" for="btnAceptarAltaUsuario"></label>
+              <div class="col-xs-4">
+                <input type="button" id="btnAceptarAltaUsuario" name="btnAceptarAltaUsuario" class="btn btn-primary" value="Aceptar" />
+              </div>
+            </div>
+          </fieldset>
+        </form>
+        <!-- Buscar Usuario-->
+        <form class="form-horizontal d-none" name="frmBuscarUsuario" id="frmBuscarUsuario">
+          <fieldset>
+            <!-- Form Name -->
+            <legend>Buscar un usuario</legend>
+
+            <div class="form-group">
+              <label class="col-xs-4 control-label" for="name_user_buscar">Nombre</label>
+              <div class="col-xs-4">
+                <input id="name_user_buscar" name="name_user_buscar" placeholder="Nombre del usuario" class="form-control input-md" type="text" />
+              </div>
+            </div>
+
+            <!-- Button -->
+            <div class="form-group">
+              <label class="col-xs-4 control-label" for="btnAceptarBuscarUsuario"></label>
+              <div class="col-xs-4">
+                <input type="button" id="btnAceptarBuscarUsuario" name="btnAceptarBuscarUsuario" class="btn btn-primary" value="Aceptar" />
+              </div>
+            </div>
+          </fieldset>
+        </form>
+        <!-- Listar Usuario edad -->
+        <form class="form-horizontal d-none" name="frmListadoUsuarioPorEdad" id="frmListadoUsuarioPorEdad">
+          <fieldset>
+            <legend>Listado de usuarios por edad</legend>
+            <!-- Edad min -->
+            <div class="form-group">
+              <label class="col-xs-4 control-label" for="minimum_age">Edad mínima</label>
+              <div class="col-xs-4">
+                <input id="minimum_age" name="minimum_age" placeholder="5" class="form-control input-md" type="number" min="5" max="98" />
+              </div>
+            </div>
+
+            <!-- Edad max -->
+            <div class="form-group">
+              <label class="col-xs-4 control-label" for="maximum_age">Edad máxima</label>
+              <div class="col-xs-4">
+                <input id="maximum_age" name="maximum_age" placeholder="32" class="form-control input-md" type="number" min="6" max="99" />
+              </div>
+            </div>
+
+            <!-- Button -->
+            <div class="form-group">
+              <label class="col-xs-4 control-label" for="btnAceptarBuscarUsuarioPorEdad"></label>
+              <div class="col-xs-4">
+                <input type="button" id="btnAceptarBuscarUsuarioPorEdad" name="btnAceptarBuscarUsuarioPorEdad" class="btn btn-primary" value="Aceptar" />
+              </div>
+            </div>
+          </fieldset>
+        </form>
+        <!-- Modificar Usuario-->
+        <form class="form-horizontal d-none" name="frmModificarUsuario" id="frmModificarUsuario">
+          <fieldset>
+            <!-- Form Name -->
+            <legend>Modificación Usuario</legend>
+            <!-- id_user_mod-->
+            <div class="form-group">
+              <label class="col-xs-4 control-label" for="id_user_mod">Id usuario</label>
+              <div class="col-xs-4">
+                <input disabled id="id_user_mod" name="id_user_mod" class="form-control input-md" type="text" />
+              </div>
+            </div>
+
+            <!-- name_user_mod-->
+            <div class="form-group">
+              <label class="col-xs-4 control-label" for="name_user_mod">Nombre</label>
+              <div class="col-xs-4">
+                <input id="name_user_mod" name="name_user_mod" placeholder="Nombre de usuario" class="form-control input-md" maxlength="50" type="text" />
+              </div>
+            </div>
+
+            <!-- email_mod-->
+            <div class="form-group">
+              <label class="col-xs-4 control-label" for="email_mod">Email</label>
+              <div class="col-xs-4">
+                <input id="email_mod" name="email_mod" placeholder="Email" class="form-control input-md" maxlength="70" type="text" />
+              </div>
+            </div>
+
+            <!-- registration_date_mod -->
+            <div class="form-group">
+              <label class="col-xs-4 control-label" for="registration_date_mod">Fecha</label>
+              <div class="col-xs-4">
+                <input id="registration_date_mod" name="registration_date_mod" placeholder="Selecciona una fecha" class="form-control input-md" type="date" />
+              </div>
+            </div>
+
+            <!-- age_mod -->
+            <div class="form-group">
+              <label class="col-xs-4 control-label" for="age_mod">Edad</label>
+              <div class="col-xs-4">
+                <input id="age_mod" name="age_mod" placeholder="Introduce tu edad" class="form-control input-md" type="number" min="5" max="99" />
+              </div>
+            </div>
+
+            <!-- Boolean input (VIP) -->
+            <div class="form-group">
+              <label class="col-xs-4 control-label" for="vip_mod">VIP</label>
+              <div class="col-xs-4">
+                <select id="vip_mod" name="vip_mod" class="form-control input-md">
+                  <option value="0">No</option>
+                  <option value="1">Sí</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- observation_mod-->
+            <div class="form-group">
+              <label class="col-xs-4 control-label" for="observation_mod">Observación</label>
+              <div class="col-xs-4">
+                <input id="observation_mod" name="observation_mod" placeholder="Escriba una observación" class="form-control input-md" type="text" />
+              </div>
+            </div>
+            <!-- lstAltaPlanes_mod -->
+            <div class="form-group">
+              <label class="col-xs-4 control-label" for="lstAltaPlanes_mod">Plan</label>
+              <div class="col-xs-4">
+                <select class="form-select" name="lstAltaPlanes_mod" id="lstAltaPlanes_mod"></select>
+              </div>
+            </div>
+
+            <!-- Button -->
+            <div class="form-group">
+              <label class="col-xs-4 control-label" for="btnAceptarModUsuario"></label>
+              <div class="col-xs-4">
+                <input type="button" id="btnAceptarModUsuario" name="btnAceptarModUsuario" class="btn btn-primary" value="Aceptar" />
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+
+    <div class="container" id="resultadoBusqueda"></div>
+    <div class="container" id="listados"></div>
+    <!-- Es importante seguir este orden de scripts -->
+    <script type="text/javascript" src="js/ajax.js"></script>
+    <script type="text/javascript" src="js/objetos.js"></script>
+    <script type="text/javascript" src="js/codigo.js"></script>
+  </body>
+</html>
