@@ -1,0 +1,30 @@
+<?php
+include_once("config.php");
+$conexion = obtenerConexion();
+
+// Recoger datos
+$user = json_decode($_POST['user']);
+
+$sql = "UPDATE user
+SET name = '" . $user->name . "', 
+email = '" .  $user->email . "', 
+registration_date = '". $user->registration_date . "', 
+age = $user->age,
+vip = $user->vip,
+observation = '". $user->observation . "',
+id_membership = $user->id_membership
+WHERE id_user = $user->id_user ";
+
+mysqli_query($conexion, $sql);
+
+if (mysqli_errno($conexion) != 0) {
+    $numerror = mysqli_errno($conexion);
+    $descrerror = mysqli_error($conexion);
+
+    responder(null, true, "Se ha producido un error número $numerror que corresponde a: $descrerror <br>", $conexion);
+
+} else {
+    // Prototipo responder($datos,$error,$mensaje,$conexion)
+    responder(null, false, "Se ha modificado el usuario", $conexion);
+}
+?>
