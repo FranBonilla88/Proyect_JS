@@ -37,10 +37,10 @@
    entorno o archivos fuera del control de versiones.
 */
 $basedatos = array(
-    "basedatos" => "gimnasio",
-    "usuario" => "root",
-    "password" => "test",
-    "servidor" => "db",
+    "basedatos" => "if0_40478396_gimnasio",
+    "usuario" => "if0_40478396",
+    "password" => "7bkvNJZxt1J",
+    "servidor" => "sql113.infinityfree.com",
     "puerto" => 3306
 );
 

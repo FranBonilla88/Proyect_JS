@@ -1,6 +1,6 @@
 "use strict";
 
-const rutaBackend = "http://localhost/Proyect_JS/backend/"; //el www es -> localhost 
+const rutaBackend = "http://fitforge.free.nf/backend/"; //el www es -> localhost 
 
 /**
  * Realiza peticiones AJAX de tipo GET

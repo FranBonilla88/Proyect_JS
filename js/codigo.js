@@ -29,6 +29,17 @@ function registrarEventos() {
   frmBuscarReserva.btnAceptarBuscarReserva.addEventListener("click", procesarBuscarReserva);
   frmListadoReservaPorFecha.btnAceptarListadoReservaPorFecha.addEventListener("click", procesarListadoReservasPorFecha);
   frmModificarReserva.btnAceptarModReserva.addEventListener("click", procesarModificarReserva);
+
+  //Parte de actividades
+  document.querySelector("#mnuAltaActividad").addEventListener("click", mostrarFormulario);
+  document.querySelector("#mnuListadoActividad").addEventListener("click", listadoActividades)
+  document.querySelector("#mnuListadoActividadPorFecha").addEventListener("click", listadoActividadesOrdenada)
+  document.querySelector("#mnuBuscarActividad").addEventListener("click", mostrarFormulario)
+  document.querySelector("#mnuBuscarActividadEntrenador").addEventListener("click", mostrarFormulario)
+  frmEditarActividad.btnAceptarEditarUsuario.addEventListener("click", editarUsuario)
+  frmAltaActividad.btnAltaActividad.addEventListener("click", procesarAltaActividad)
+  frmBuscarActividadNombre.btnAceptarBuscarActividad.addEventListener("click", listadoActividadesPorNombre)
+  frmBuscarActividadEntrenador.btnAceptarBuscarActividadEntrenador.addEventListener("click", listadoActividadesPorEntrenador)
 }
 
 function mostrarFormulario(oEvento) {
@@ -56,6 +67,19 @@ function mostrarFormulario(oEvento) {
     case "mnuListadoReservaPorFecha":
       frmListadoReservaPorFecha.classList.remove("d-none");
       break;
+    case "mnuAltaActividad":
+      frmAltaActividad.classList.remove("d-none");
+      actualizarDesplegableTrainer(undefined);
+      break;
+    case "mnuBuscarActividad":
+      frmBuscarActividadNombre.classList.remove("d-none");
+
+      break;
+    case "mnuBuscarActividadEntrenador":
+      frmBuscarActividadEntrenador.classList.remove("d-none");
+        
+      actualizarDesplegableTrainer(undefined);
+      break;
   }
 }
 function ocultarFormularios() {
@@ -68,6 +92,11 @@ function ocultarFormularios() {
   frmBuscarReserva.classList.add("d-none");
   frmListadoReservaPorFecha.classList.add("d-none");
   frmModificarReserva.classList.add("d-none");
+
+  frmAltaActividad.classList.add("d-none");
+  frmBuscarActividadEntrenador.classList.add("d-none");
+  frmBuscarActividadNombre.classList.add("d-none");
+  frmEditarActividad.classList.add("d-none");
 
   // Borrado del contenido de capas con resultados
   document.querySelector("#resultadoBusqueda").innerHTML = "";
@@ -665,3 +694,167 @@ function mostrarUsuarios() {
   open("listado_usuarios.html");
 }
 
+
+async function procesarAltaActividad() {
+  let name = frmAltaActividad.txtName.value;
+  let descripcion = frmAltaActividad.txtDescription.value;
+  let day = frmAltaActividad.dateActivityDay.value;
+  let duration = parseInt(frmAltaActividad.numberDuration.value);
+  let avalible = (frmAltaActividad.boolAvalible.value != "") ? 1 : 0;
+  let keyTrainer = frmAltaActividad.keyTrainer.value;
+
+    console.log(new Activity(null, name, descripcion, day, duration, !(avalible==""), keyTrainer))
+    let respuesta = await oGimnasio.altaActividad(new Activity(null, name, descripcion, day, duration, !(avalible==""), keyTrainer));
+    alert(respuesta.mensaje);
+    if (!respuesta.error) {
+      //Resetear formulario
+      frmAltaActividad.reset();
+      // Ocultar el formulario
+      frmAltaActividad.classList.add("d-none");
+    }
+}
+async function actualizarDesplegableTrainer(idTrainer) {
+  let respuesta = await oGimnasio.listadoUsuarios();
+  let options = "";
+
+  for (let trainer of respuesta.datos) {
+    if (idTrainer && idTrainer == trainer.id_user) {
+      options += "<option selected value='" + trainer.id_user + "' >" + trainer.name + "</option>";
+    } else {
+      options += "<option value='" + trainer.id_user + "' >" + trainer.name + "</option>";
+    }
+  }
+  // Agrego los options generados a partir del contenido de la BD en todos los desplegables
+  frmAltaActividad.keyTrainer.innerHTML = options;
+  frmEditarActividad.idTrainer.innerHTML = options;
+  frmBuscarActividadEntrenador.trainer.innerHTML = options;
+}
+
+async function borrarActividad(oEvento) {
+  
+  let boton = oEvento.target.closest("input");
+  if (!boton) return;
+  let id_activity = boton.dataset.id_activity; 
+
+  let respuesta = await oGimnasio.borrarActividad(id_activity);
+
+  alert(respuesta.mensaje);
+
+  if (!respuesta.error) {
+    boton.closest("tr").remove();
+  }
+}
+
+async function empezarEditarActividad(oEvento){
+  let boton = oEvento.target.closest("input");
+  if (!boton) return;
+  let activity = JSON.parse(boton.dataset.activitydata);
+
+  ocultarFormularios()
+
+  frmEditarActividad.classList.remove("d-none");
+  frmEditarActividad.idActivity.value = activity.id_activity
+  frmEditarActividad.nameActivity.value = activity.name
+  frmEditarActividad.descriptionActivity.value = activity.description
+  frmEditarActividad.activityDay.value = activity.activity_day
+  frmEditarActividad.numDuration.value = activity.duration
+  frmEditarActividad.boolAvalible.value = activity.available
+
+  actualizarDesplegableTrainer(activity.id_trainer)
+}
+async function editarUsuario() {
+  let id = frmEditarActividad.idActivity.value;
+  let name = frmEditarActividad.nameActivity.value;
+  let descripcion = frmEditarActividad.descriptionActivity.value;
+  let day = frmEditarActividad.activityDay.value;
+  let duration = parseInt(frmEditarActividad.numDuration.value);
+  let avalible = (frmEditarActividad.boolAvalible.value != "") ? 1 : 0;
+  let keyTrainer = frmEditarActividad.idTrainer.value;
+
+
+  let respuesta = await oGimnasio.modificarActividad(new Activity(id, name, descripcion, day, duration, avalible, keyTrainer));
+
+  alert(respuesta.mensaje);
+
+  if (!respuesta.error) {
+      frmEditarActividad.reset();
+      frmEditarActividad.classList.add("d-none");
+  }
+  
+}
+
+async function listadoActividades() {
+  let respuesta = await oGimnasio.listadoActividades()
+  if(!respuesta.datos){
+    console.log(respuesta)
+    return
+  }
+  procesarListadoActividad(respuesta.datos)
+}
+
+async function listadoActividadesOrdenada() {
+  let respuesta = await oGimnasio.listadoActividadesOrdered()
+  if(!respuesta.datos){
+    console.log(respuesta)
+    return
+  }
+  procesarListadoActividad(respuesta.datos)
+}
+
+async function listadoActividadesPorEntrenador() {
+  let entrenador = parseInt(frmBuscarActividadEntrenador.trainer.value)
+  let respuesta = await oGimnasio.listadoActividadesPorEntrenador(entrenador)
+  if(!respuesta.datos){
+    console.log(respuesta)
+    return
+  }
+  procesarListadoActividad(respuesta.datos)
+}
+
+async function listadoActividadesPorNombre() {
+  let nombre = frmBuscarActividadNombre.activityName.value
+  let respuesta = await oGimnasio.listadoActividadesPorNombre(nombre)
+  if(!respuesta.datos){
+    console.log(respuesta)
+    return
+  }
+  procesarListadoActividad(respuesta.datos)
+}
+
+function procesarListadoActividad(actividades) {
+  ocultarFormularios();
+  let listado = '<table class="table table-striped">';
+  listado += "<thead><tr><th>Nombre</th><th>Descripcion</th><th>Dia de la actividad</th><th>Duracion</th><th>¿Disponible?</th><th>Entrenador</th><th>Acciones</th></tr></thead>";
+  listado += "<tbody>";
+  
+  for (let fila of actividades) {
+    listado += "<tr>"
+    listado += "<td>" + fila.name + "</td>";
+    listado += "<td>" + fila.description + "</td>";
+    listado += "<td>" + fila.activity_day + "</td>";
+    listado += "<td>" + fila.duration + "</td>";
+    listado += "<td>" + (fila.available=="1"?"Si":"No") + "</td>";
+    listado += "<td>" + fila.trainer + "</td>";
+    
+    listado += "<td><input type='button' class='btn btn-primary' value='Editar' id='btnEditarActividad' data-activityData='" +
+        JSON.stringify(fila) +
+        "'></td>";
+    listado += "<td><input type='button' class='btn btn-danger' value='Borrar' id='btnBorrarActividad' data-id_activity='" +
+        fila.id_activity +
+        "'></td>";
+
+
+
+
+      listado +="</tr>"
+  }
+  listado += "</tbody></table>";
+  
+  document.querySelector("#listados").innerHTML = listado
+  document.querySelectorAll("#btnEditarActividad").forEach((x)=>{
+    x.addEventListener("click", empezarEditarActividad)
+  })
+  document.querySelectorAll("#btnBorrarActividad").forEach((x)=>{
+    x.addEventListener("click", borrarActividad)
+  })
+}

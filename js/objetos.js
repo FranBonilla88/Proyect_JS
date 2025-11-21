@@ -172,6 +172,84 @@ class Reservation {
   }
 }
 
+class Activity {
+  #id_activity;
+  #name;
+  #description;
+  #activity_day;
+  #duration;
+  #available;
+  #id_trainer;
+  constructor(id_activity,
+    name,
+    description,
+    activity_day,
+    duration,
+    available,
+    id_trainer) {
+    this.#id_activity = id_activity;
+    this.#name = name;
+    this.#description = description;
+    this.#activity_day = activity_day;
+    this.#duration = duration;
+    this.#available = available;
+    this.#id_trainer = id_trainer;
+  }
+  get id_activity() {
+    return this.#id_activity;
+  }
+  set id_activity(id_activity) {
+    this.#id_activity = id_activity;
+  }
+  get name() {
+    return this.#name;
+  }
+  set name(name) {
+    this.#name = name;
+  }
+  get description() {
+    return this.#description;
+  }
+  set description(description) {
+    this.#description = description;
+  }
+  get activity_day() {
+    return this.#activity_day;
+  }
+  set activity_day(activity_day) {
+    this.#activity_day = activity_day;
+  }
+  get duration() {
+    return this.#duration;
+  }
+  set duration(duration) {
+    this.#duration = duration;
+  }
+  get available() {
+    return this.#available;
+  }
+  set available(available) {
+    this.#available = available;
+  }
+  get id_trainer() {
+    return this.#id_trainer;
+  }
+  set id_trainer(id_trainer) {
+    this.#id_trainer = id_trainer;
+  }
+  toJSON() {
+    let oActivity = {
+      id_activity: this.#id_activity,
+      name: this.#name,
+      description: this.#description,
+      activity_day: this.#activity_day,
+      duration: this.#duration,
+      available: this.#available,
+      id_trainer: this.#id_trainer,
+    };
+    return oActivity;
+  }
+}
 class Gimnasio {
   async altaUsuario(oUser) {
     let datos = new FormData();
@@ -315,6 +393,69 @@ class Gimnasio {
     let datos = new FormData();
     datos.append("reservation", JSON.stringify(oReservation));
     let respuesta = await peticionPOST("modificar_reserva.php", datos);
+    return respuesta;
+  }
+  async altaActividad(oActivity) {
+    let datos = new FormData();
+
+    datos.append("activity", JSON.stringify(oActivity));
+
+    let respuesta = await peticionPOST("alta_actividad.php", datos);
+
+    return respuesta;
+  }
+  async borrarActividad(id_activity){
+    let datos = new FormData();
+
+    datos.append("id_activity", id_activity);
+
+    let respuesta = await peticionPOST("borrar_actividad.php", datos);
+
+    return respuesta;
+  }
+  async modificarActividad(oActividad){
+    let datos = new FormData();
+
+    datos.append("activity", JSON.stringify(oActividad));
+
+    let respuesta = await peticionPOST("modificar_actividad.php", datos);
+    return respuesta
+  }
+  async listadoActividades(){
+    let datos = new FormData();
+
+    let respuesta = await peticionGET("get_actividades.php", datos);
+    
+    return respuesta;
+  }
+  
+  async listadoActividadesOrdered(){
+    let datos = new FormData();
+
+    datos.append("orderByDate", "1");
+
+    let respuesta = await peticionGET("get_actividades.php", datos);
+
+    return respuesta;
+  }
+  
+  async listadoActividadesPorEntrenador(trainer){
+    let datos = new FormData();
+
+    datos.append("trainer", trainer);
+
+    let respuesta = await peticionGET("get_actividades.php", datos);
+
+    return respuesta;
+  }
+  
+  async listadoActividadesPorNombre(activityName){
+    let datos = new FormData();
+
+    datos.append("activityName", activityName);
+
+    let respuesta = await peticionGET("get_actividades.php", datos);
+
     return respuesta;
   }
 }

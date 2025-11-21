@@ -54,22 +54,21 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false">Actividades</a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Alta de Actividad</a></li>
-              <hr class="dropdown-divider" />
-              <li><a class="dropdown-item" href="#">Buscar actividad por nombre</a></li>
-              <hr class="dropdown-divider" />
-              <li><a class="dropdown-item" href="#">Buscar actividad por fecha</a></li>
-              <hr class="dropdown-divider" />
-              <li><a class="dropdown-item" href="#">Listado de actividades</a></li>
-              <hr class="dropdown-divider" />
-              <li><a class="dropdown-item" href="#">Listado de actividades ordenadas por fecha</a></li>
-              <hr class="dropdown-divider" />
-            </ul>
-          </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Actividades</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#" id="mnuAltaActividad">Alta de Actividad</a></li>
+                <hr class="dropdown-divider" />
+                <li><a class="dropdown-item" href="#" id="mnuBuscarActividad">Buscar actividad por nombre</a></li>
+                <hr class="dropdown-divider" />
+                <li><a class="dropdown-item" href="#" id="mnuBuscarActividadEntrenador">Buscar actividad por entrenador</a></li>
+                <hr class="dropdown-divider" />
+                <li><a class="dropdown-item" href="#" id="mnuListadoActividad">Listado de actividades</a></li>
+                <hr class="dropdown-divider" />
+                <li><a class="dropdown-item" href="#" id="mnuListadoActividadPorFecha">Listado de actividades ordenadas por fecha</a></li>
+                <hr class="dropdown-divider" />
+              </ul>
+            </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
               aria-expanded="false">Reserva</a>
@@ -470,6 +469,162 @@
           </div>
         </fieldset>
       </form>
+
+      
+        <form class="form-horizontal d-none" name="frmAltaActividad" id="frmAltaActividad">
+            <fieldset>
+                <legend>Alta de actividad</legend>
+                <div>
+                    <label class="col-xs-4" for="txtName">Nombre</label>
+                    <div class="col-xs-4">
+                        <input id="txtName" name="txtName" placeholder="Nombre de la actividad" class="form-control input-md" maxlength="50" type="text">
+                    </div>
+                </div>
+                <div>
+                    <label class="col-xs-4" for="txtDescription">Descripcion</label>
+                    <div class="col-xs-4">
+                        <input id="txtDescription" name="txtDescription" placeholder="Descripcion de la actividad" class="form-control input-md" type="text">
+                    </div>
+                </div>
+                <div>
+                    <label class="col-xs-4" for="dateActivityDay">Dia de la actividad</label>
+                    <div class="col-xs-4">
+                        <input id="dateActivityDay" name="dateActivityDay" class="form-control input-md" type="datetime-local">
+                    </div>
+                </div>
+                <div>
+                    <label class="col-xs-4" for="numberDuration">Duración</label>
+                    <div class="col-xs-4">
+                        <input name="numberDuration" id="numberDuration" class="form-control input-md" type="number">
+                    </div>
+                </div>
+                <div>
+                    <label class="col-xs-4" for="boolAvalible">¿Esta disponible?</label>
+                    <div class="form-switch">
+                        <input name="boolAvalible" id="boolAvalible" class="form-check-input input-md" type="checkbox">
+                    </div>
+                </div>
+                <div>
+                    <label class="col-xs-4" for="keyTrainer">Entrenador</label>
+                    <select name="keyTrainer" id="keyTrainer" class="form-select">
+                        
+                    </select>
+
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-4 control-label" for="btnAltaActividad"></label>
+                    <div class="col-xs-4">
+                        <input type="button" id="btnAltaActividad" name="btnAltaActividad" class="btn btn-primary" value="Aceptar" />
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+
+        <form class="form-horizontal d-none" name="frmEditarActividad" id="frmEditarActividad">
+            <fieldset>
+                <legend>Modificación de Actividad</legend>
+                <input type="hidden" name="idActivity" id="idActivity">
+                <div class="form-group">
+                    <label class="col-xs-4 control-label" for="nameActivity">Nombre</label>
+                    <div class="col-xs-4">
+                        <input value="" id="nameActivity" name="nameActivity" placeholder="Nombre de la actividad" class="form-control input-md" maxlength="50" type="text">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-4 control-label" for="descriptionActivity">Descripcion</label>
+                    <div class="col-xs-4">
+                        <input value="" id="descriptionActivity" name="descriptionActivity" placeholder="Descripcion de la actividad" class="form-control input-md" type="text">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-4 control-label" for="activityDay">Fecha</label>
+                    <div class="col-xs-4">
+                        <input value="" id="activityDay" name="activityDay" placeholder="Selecciona una fecha" class="form-control input-md" type="datetime-local">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-4 control-label" for="numDuration">Duracion</label>
+                    <div class="col-xs-4">
+                        <input value="" id="numDuration" name="numDuration" placeholder="Introduce la duracion de la actividad" class="form-control input-md" type="number">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-4 control-label" for="boolAvalible">¿Esta disponible?</label>
+                    <div class="col-xs-4">
+                        <select id="boolAvalible" name="boolAvalible" class="form-control input-md">
+                            <option value="0" >No</option>
+                            <option value="1" >Sí</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-4 control-label" for="idTrainer">Entranador</label>
+                    <div class="col-xs-4">
+                        <select id="idTrainer" name="idTrainer" class="form-control input-md">
+                            
+                        </select>
+                    </div>
+                </div>
+
+                <input type="hidden" name="id_activity" id="id_activity" />
+
+                <div class="form-group">
+                    <label class="col-xs-4 control-label" for="btnAceptarEditarUsuario"></label>
+                    <div class="col-xs-4">
+                        <input type="button" id="btnAceptarEditarUsuario" name="btnAceptarEditarUsuario" class="btn btn-primary" value="Aceptar" />
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+        <form class="form-horizontal d-none" name="frmBuscarActividadEntrenador" id="frmBuscarActividadEntrenador">
+            <fieldset>
+                <legend>Buscar una actividad</legend>
+
+                <div class="form-group">
+                    <label class="col-xs-4 control-label" for="trainer">Entrenador</label>
+                    <div class="col-xs-4">
+                        <select id="trainer" name="trainer" placeholder="Entrenador" class="form-control input-md" type="text">
+                            
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-4 control-label" for="btnAceptarBuscarActividadEntrenador"></label>
+                    <div class="col-xs-4">
+                        <input type="button" id="btnAceptarBuscarActividadEntrenador" name="btnAceptarBuscarActividadEntrenador" class="btn btn-primary" value="Aceptar" />
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+        <form class="form-horizontal d-none" name="frmBuscarActividadNombre" id="frmBuscarActividadNombre">
+            <fieldset>
+                <!-- Form Name -->
+                <legend>Buscar una actividad</legend>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-xs-4 control-label" for="activityName">Nombre</label>
+                    <div class="col-xs-4">
+                        <input id="activityName" name="activityName" placeholder="Nombre de la actividad" class="form-control input-md" type="text">
+                    </div>
+                </div>
+
+                <!-- Button -->
+                <div class="form-group">
+                    <label class="col-xs-4 control-label" for="btnAceptarBuscarActividad"></label>
+                    <div class="col-xs-4">
+                        <input type="button" id="btnAceptarBuscarActividad" name="btnAceptarBuscarActividad" class="btn btn-primary" value="Aceptar" />
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+
     </div>
   </div>
 
